@@ -1,11 +1,9 @@
 name: Atualizar Lotofácil
 
 on:
+  workflow_dispatch:    # permite rodar manualmente
   schedule:
-    # Roda todo dia às 20:20 UTC (17:20 horário de Brasília no horário de verão, 16:20 sem verão)
-    # Ajuste conforme sua preferência
-    - cron: '20 20 * * *'
-  workflow_dispatch:   # Permite rodar manualmente pela interface do GitHub
+    - cron: '20 20 * * *'   # todo dia às 20:20 UTC
 
 jobs:
   update:
@@ -19,13 +17,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar dependências
+      - name: Instalar requests
         run: pip install requests
 
       - name: Executar o script
         run: python scrap_caixa.py
 
-      - name: Verificar se houve alteração no CSV
+      - name: Commit e push das alterações
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
