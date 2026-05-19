@@ -1,15 +1,15 @@
 name: Atualizar Lotofácil
 
 on:
-  workflow_dispatch:    # permite rodar manualmente
+  workflow_dispatch:
   schedule:
-    - cron: '20 20 * * *'   # todo dia às 20:20 UTC
+    - cron: '20 20 * * *'
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Clonar o repositório
+      - name: Checkout do código
         uses: actions/checkout@v4
 
       - name: Configurar Python
@@ -20,13 +20,13 @@ jobs:
       - name: Instalar requests
         run: pip install requests
 
-      - name: Executar o script
+      - name: Executar script
         run: python scrap_caixa.py
 
-      - name: Commit e push das alterações
+      - name: Salvar alterações no CSV
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add historico_sorteios.csv
-          git diff --staged --quiet || git commit -m "Atualização automática: novos sorteios"
+          git diff --staged --quiet || git commit -m "Atualiza sorteios"
           git push
