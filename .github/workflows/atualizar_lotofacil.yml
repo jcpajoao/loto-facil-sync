@@ -3,7 +3,7 @@ name: Atualizar Lotofácil
 on:
   workflow_dispatch:
   schedule:
-    - cron: '20 20 * * *'
+    - cron: '00 01 * * *'
 
 jobs:
   update:
